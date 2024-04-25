@@ -12,8 +12,8 @@ class SessionService {
     }
   };
 
-  addBreak = async (session, breakTime) => {
-
+  addBreak = async (session) => {
+    console.log(session)
   }
 
   addEndBreak = async (session) => {

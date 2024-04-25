@@ -10,6 +10,13 @@ export default {
   // Stop running tests after `n` failures
   // bail: 0,
 
+  
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.js$': 'esbuild-jest',
+  },
+  
+
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/sf/8lbdkxmn1c13rl2x70m7nvcr0000gn/T/jest_dx",
 
