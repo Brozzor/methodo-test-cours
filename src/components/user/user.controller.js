@@ -13,7 +13,7 @@ class UserController {
   };
 
   updateUser = async (req, res) => {
-    this.userService.updateUser(new User(req.body.email, req.body.password, req.body.age, req.body.id))
+    this.userService.updateUser(new User(req.body.email, req.body.password, req.body.age, req.params.id))
         .then(createdUser => res.status(200).send(createdUser.toJSON()))
         .catch(err => res.status(404).send(err.message))
   };

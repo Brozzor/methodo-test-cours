@@ -1,35 +1,29 @@
 import db from "../../mongo/db.js";
-import { ObjectId } from "mongodb";
-import User from "./user.entities.js";
+import {ObjectId} from "mongodb";
+import Subject from "./subject.entities.js";
 
-class UserRepository {
+class SubjectRepository {
     constructor() {
-        this.collection = db.collection("users");
+        this.collection = db.collection("subjects");
     }
 
     async getById(id) {
         const query = this.createBsonId(id);
-
-        const document = await this.collection.findOne(query);
-        if (!document) {
-            return undefined
-        }
-
-        return User.fromDocument(document);
+        return Subject.fromDocument(await this.collection.findOne(query));
     }
 
     async getByEmail(email) {
-        let query = { email: email };
+        let query = {email: email};
         const document = await this.collection.findOne(query);
         if (!document) {
             return undefined
         }
-        return User.fromDocument(document);
+        return Subject.fromDocument(document);
     }
 
     getAll = async () => {
         const documents = await this.collection.find({}).toArray();
-        return documents.map(doc => User.fromDocument(doc));
+        return documents.map(doc => Subject.fromDocument(doc));
     };
 
     deleteAll = async () => await this.collection.deleteMany({});
@@ -45,6 +39,8 @@ class UserRepository {
         const updateDocument = {
             $set: {
                 email: document.email,
+                firstname: document.firstname,
+                lastname: document.lastname,
                 password: document.password,
                 age: document.age
             }
@@ -62,7 +58,7 @@ class UserRepository {
     createBsonId(id) {
         let query;
         try {
-            query = { _id: new ObjectId(id) };
+            query = {_id: new ObjectId(id)};
         } catch (err) {
             throw new Error('Invalid id');
         }
@@ -70,4 +66,4 @@ class UserRepository {
     }
 }
 
-export default UserRepository;
+export default SubjectRepository;
